@@ -1,0 +1,212 @@
+<!DOCTYPE html> <!-- Define que este documento utiliza el estándar HTML5 moderno -->
+<html lang="es"> <!-- Inicia el elemento raíz del HTML y establece el idioma en español -->
+
+<head> <!-- Contenedor para los metadatos y enlaces a recursos externos (CSS, fuentes, etc.) -->
+    <meta charset="UTF-8">
+    <!-- Define la codificación de caracteres a UTF-8 para que reconozca tildes, letras 'ñ' y acentos -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Hace que la página sea responsiva y se adapte al tamaño de teléfonos y pantallas -->
+    <title>CV - Brahian Santiago</title> <!-- Define el título que aparece en la pestaña del navegador -->
+
+    <!-- Enlace al archivo CSS local gestionado por la función url_for() de Flask -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Enlace a la librería CDN de FontAwesome para importar los íconos (teléfono, sobre, etc.) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head> <!-- Cierre de la sección del encabezado técnico -->
+
+<body> <!-- Inicia el cuerpo visible del sitio web -->
+
+    <!-- Contenedor principal que agrupa las dos columnas (izquierda y derecha) para el diseño con Flexbox/Grid -->
+    <div class="cv-contenedor">
+
+        <!-- ========================================== -->
+        <!-- COLUMNA IZQUIERDA: Información de Contacto -->
+        <!-- ========================================== -->
+        <div class="columna_izquierda"> <!-- Div que envuelve toda la columna lateral izquierda -->
+
+            <!-- Carga la foto de perfil desde la carpeta 'static/img/foto.jpg' usando Flask -->
+            <img src="{{ url_for('static', filename='img/foto.jpg') }}" alt="Foto de Brahian" class="foto-perfil">
+
+            <!-- SECCIÓN 1: CONTACTO -->
+            <section class="seccion-desplegable"> <!-- Envoltorio para aplicar los estilos de menú desplegable -->
+                <!-- Encabezado con clase específica para detectar el clic en JS o controlar la flecha en CSS -->
+                <h2 class="titulo-desplegable">Contacto <span class="flecha">▼</span></h2>
+
+                <div class="contenido-desplegable"> <!-- Contenedor que se oculta/muestra mediante CSS -->
+                    <ul class="lista-contacto"> <!-- Lista sin orden para organizar los ítems de contacto -->
+                        <!-- Ítem con ícono de teléfono e información en texto encursivado (em) -->
+                        <li><i class="fa-solid fa-phone"></i> <em>3147867948</em></li>
+
+                        <!-- Ítem para el correo. Se corrigió la sintaxis de '<a href=' para que el enlace abra el gestor de correo -->
+                        <li>
+                            <i class="fa-solid fa-envelope"></i>
+                            <em><a href="mailto:santipirafan1@gmail.com">santipirafan1@gmail.com</a></em>
+                        </li>
+
+                        <!-- Bucle Jinja2: Recorre la lista 'contactos' enviada desde Python -->
+                        {% for r in contactos %}
+                        <li>
+                            <strong>{{ r.red }}:</strong> <!-- Muestra la clave 'red' (ej. LinkedIn) en negrita -->
+                            <!-- Genera un enlace que se abre en una pestaña nueva mediante target="_blank" -->
+                            <a href="{{ r.link }}" target="_blank">Perfil de {{ r.red }}</a>
+                        </li>
+                        {% endfor %} <!-- Cierre del bucle for de contactos -->
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 2: FORMACIÓN ACADÉMICA -->
+            <section class="seccion-desplegable">
+                <h2 class="titulo-desplegable">Formación Académica <span class="flecha">▼</span></h2>
+                <div class="contenido-desplegable">
+                    <ul>
+                        <!-- Bucle Jinja2: Recorre la lista 'formacion' proveniente del servidor Python -->
+                        {% for c in formacion %}
+                        <div class="item-educacion"> <!-- Div para separar con margen cada título o estudio -->
+                            <li>
+                                <strong>{{ c.titulo }}</strong> ({{ c.fecha }}) - <!-- Imprime el título y el año -->
+                                <a href="{{ c.link }}" target="_blank">ver certificado</a>
+                                <!-- Enlace al certificado externo -->
+                            </li>
+                        </div>
+                        {% endfor %} <!-- Cierre del bucle for de formación -->
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 3: CERTIFICACIONES Y CURSOS -->
+            <section class="seccion-desplegable">
+                <h2 class="titulo-desplegable">Certificaciones y Cursos <span class="flecha">▼</span></h2>
+                <div class="contenido-desplegable">
+                    <ul>
+                        <!-- Bucle Jinja2: Recorre la lista 'cursos' enviada desde app.py -->
+                        {% for cur in cursos %}
+                        <div class="item-educacion">
+                            <li>
+                                <!-- Muestra la variable 'cur.titulo' y 'cur.fecha'. Se eliminó el texto borrador que causaba errores -->
+                                <strong>{{ cur.titulo }}</strong> ({{ cur.fecha }}) -
+                                <a href="{{ cur.link }}" target="_blank">ver certificados</a>
+                            </li>
+                        </div>
+                        {% endfor %} <!-- Cierre del bucle de cursos -->
+                    </ul>
+                </div>
+            </section>
+
+        </div> <!-- Cierre de la etiqueta de la columna izquierda -->
+
+        <!-- ========================================== -->
+        <!-- COLUMNA DERECHA: Perfil, Experiencia, Ref. -->
+        <!-- ========================================== -->
+        <main class="columna_derecha"> <!-- Etiqueta semántica <main> para el contenido principal del sitio -->
+
+            <!-- Encabezado del perfil personal -->
+            <header class="encabezado-perfil">
+                <h1>Brahian Santiago Pirafan</h1> <!-- Nombre principal -->
+                <h3 class="rol">Junior Software Engineer</h3> <!-- Cargo/Puesto objetivo -->
+            </header>
+
+            <!-- Resumen profesional -->
+            <section class="perfil">
+                <h2>Perfil Profesional</h2>
+                <div>
+                    
+                    <p>{{perfil}}</p>
+                    
+                </div>
+                
+            </section>
+
+            <!-- Sección de Experiencia Laboral -->
+            <section>
+                <h2>Experiencia Laboral</h2>
+
+                <!-- Bloque de Trabajo 1: NTT DATA -->
+                <div class="seccion-desplegable item-experiencia">
+                    <h3 class="empresas titulo-desplegable">NTT DATA : 2023-2024</h3>
+                    <div class="contenido-desplegable">
+                        <strong>Junior Software Engineer</strong>
+                        <ul>
+                            <li>Certifiqué la calidad de aplicaciones de software mediante el análisis de requerimientos
+                                funcionales</li>
+                            <li>Diseñé, documenté y ejecuté casos de prueba manuales para validar funcionalidades</li>
+                            <li>Registré, documenté y realicé el seguimiento de incidencias (bugs), colaborando con el
+                                equipo de
+                                desarrollo para su análisis, corrección y validación.</li>
+                            <li>Brindé apoyo al equipo de automatización de pruebas mediante la revisión y corrección de
+                                casos de prueba
+                                para optimizar su ejecución</li>
+                            <li>Colaboré en la identificación y solución de inconvenientes relacionados con scripts de
+                                automatización
+                                desarrollados en Java.</li>
+                            <li>Trabajé de forma coordinada con los equipos de desarrollo y QA para garantizar la calidad
+                                del software y
+                                el cumplimiento de los estándares establecidos.</li>
+                        </ul>
+                    
+
+                    </div>
+                    
+                    
+                </div>
+
+                <!-- Bloque de Trabajo 2: Teleperformance -->
+                <div class="seccion-desplegable tem-experiencia">
+                    <h3 class="empresas titulo-desplegable">Teleperformance : 2025-2026</h3>
+
+                    <div class="contenido-desplegable">
+                        <strong>Call center agent (chat and email)</strong>
+                        <ul>
+                            <li>Brindé atención y soporte a usuarios de Mercado Libre a través de canales de chat y correo
+                                electrónico,
+                                ofreciendo una experiencia de servicio ágil, empática y orientada a la solución de sus
+                                solicitudes.</li>
+                            <li>Gestioné simultáneamente conversaciones por chat y casos recibidos por correo electrónico,
+                                priorizando
+                                requerimientos y manteniendo altos estándares de calidad en la atención.</li>
+                            <li>Desarrollé habilidades para trabajar bajo presión y administrar múltiples casos de forma
+                                simultánea,
+                                fortaleciendo mi capacidad de respuesta, organización y toma de decisiones.</li>
+                            <li>Contribuí a la satisfacción del cliente mediante una atención enfocada en la resolución
+                                eficiente de
+                                problemas y el mantenimiento de una experiencia positiva para el usuario.</li>
+                        </ul>
+                    </div>
+                    
+                </div>
+
+                <!-- Bloque de Trabajo 3: NEXA -->
+                <div class="item-experiencia seccion-desplegable">
+                    <h3 class="empresas titulo-desplegable">NEXA : 2022</h3>
+                    <div class="contenido-desplegable">
+                        <strong>Call center agent (Llamadas)</strong>
+                        <ul>
+                            <li>Brindé soporte técnico y asesoramiento en la campaña de Claro empresas, resolví consultas de
+                                manera
+                                efectiva, mejorando la satisfacción del cliente y manteniendo altos estándares de calidad en
+                                un entorno
+                                de análisis y call center de alto volumen.</li>
+                        </ul>
+                    </div>
+                    
+                </div>
+            </section>
+
+            <!-- Sección de Referencias -->
+            <section class="referencia">
+                <h2>Referencias</h2>
+                <div class="item-referencia">
+                    <h3>Ximena Pirafan</h3>
+                    <p>Fonoaudióloga</p>
+                    <p>Cel: 3193047006</p>
+                </div>
+            </section>
+
+        </main> <!-- Cierre del área principal derecha -->
+
+    </div> <!-- Cierre del contenedor principal div.cv-contenedor -->
+
+</body> <!-- Cierre del cuerpo del documento -->
+
+</html> <!-- Cierre del archivo HTML -->

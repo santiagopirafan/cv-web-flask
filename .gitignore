@@ -1,0 +1,30 @@
+# -------------------------------------------------------------
+# 1. ENTORNOS VIRTUALES
+# -------------------------------------------------------------
+# Un entorno virtual es una carpeta local que contiene todas las librerías 
+# instaladas de Python (como Flask). Pesa muchísimo (cientos de megabytes) 
+# y cada desarrollador debe crear el suyo en su propia máquina. 
+# Nunca se sube a GitHub.
+venv/
+env/
+.venv/
+
+# -------------------------------------------------------------
+# 2. ARCHIVOS TEMPORALES Y CACHÉ DE PYTHON
+# -------------------------------------------------------------
+# Cuando ejecutas 'python app.py', Python compila tu código a un lenguaje
+# intermedio (bytecode) y crea carpetas invisibles llamadas __pycache__ 
+# y archivos .pyc para responder más rápido la próxima vez. 
+# Estos archivos cambian cada segundo en tu PC y son irrelevantes para GitHub.
+__pycache__/
+*.pyc
+
+# -------------------------------------------------------------
+# 3. CONFIGURACIÓN DEL EDITOR DE CÓDIGO
+# -------------------------------------------------------------
+# VS Code o PyCharm crean carpetas ocultas (.vscode o .idea) para guardar 
+# tus preferencias personales (color del tema, atajos, tamaño de letra).
+# No queremos subir esto porque interferiría con las configuraciones 
+# de otras personas que abran tu código.
+.vscode/
+.idea/
