@@ -238,10 +238,19 @@ body {
     transition: transform 0.4s ease;
 }
 
-/* Selecciona la flecha cuando el usuario pasa el cursor sobre el contenedor de la sección */
-.seccion-desplegable:hover .flecha {
-    /* Rotar la flecha 180 grados hacia arriba para indicar que la sección se ha abierto */
+/* ==========================================
+   DESPLEGABLES (CONTROL SEPARADO PC / MÓVIL)
+   ========================================= */
+
+/* 1. COMPORTAMIENTO PARA CELULARES Y TABLETS (Vía JavaScript) */
+.seccion-desplegable.activo .flecha {
     transform: rotate(180deg);
+}
+
+.seccion-desplegable.activo .contenido-desplegable {
+    max-height: 500px;
+    opacity: 1;
+    padding: 12px 15px;
 }
 
 /* Selecciona la caja oculta que contiene las listas desplegables */
@@ -262,16 +271,18 @@ body {
     transition: max-height 0.5s ease-in-out, opacity 0.4s ease, padding 0.4s ease;
 }
 
-/* Selecciona el contenido desplegable cuando el usuario posiciona el mouse sobre la sección */
-.seccion-desplegable:hover .contenido-desplegable {
-    /* Permite un límite máximo de altura de 500px para dejar desplegar todo el contenido guardado */
-    max-height: 500px;
+/* 2. COMPORTAMIENTO EXCLUSIVO PARA COMPUTADORAS CON MOUSE */
+/* @media (hover: hover) le dice al navegador: "Aplica esto SOLO si el dispositivo tiene un ratón físico" */
+@media (hover: hover) {
+    .seccion-desplegable:hover .flecha {
+        transform: rotate(180deg);
+    }
 
-    /* Cambia la opacidad a 1 (totalmente visible) */
-    opacity: 1;
-
-    /* Asigna un padding interno cómodo de 12px arriba/abajo y 15px a los lados al abrirse */
-    padding: 12px 15px;
+    .seccion-desplegable:hover .contenido-desplegable {
+        max-height: 500px;
+        opacity: 1;
+        padding: 12px 15px;
+    }
 }
 
 /* Selecciona las listas no ordenadas ubicadas dentro de la caja desplegable */

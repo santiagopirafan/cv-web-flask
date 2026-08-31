@@ -207,6 +207,22 @@
 
     </div> <!-- Cierre del contenedor principal div.cv-contenedor -->
 
-</body> <!-- Cierre del cuerpo del documento -->
+</body> 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const titulosDesplegables = document.querySelectorAll('.titulo-desplegable');
+
+        titulosDesplegables.forEach(titulo => {
+
+            titulo.addEventListener('click', () => {
+
+                const contenedorPadre = titulo.parentElement;
+
+                contenedorPadre.classList.toggle('activo');
+            });
+        });
+    });
+</script><!-- Cierre del cuerpo del documento -->
 
 </html> <!-- Cierre del archivo HTML -->
